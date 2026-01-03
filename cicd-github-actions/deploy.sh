@@ -11,5 +11,5 @@ else
 fi
 
 cd $APP_DIR/docker-compose-app
-docker compose down
-docker compose up -d
+docker-compose down
+docker-compose up -d
