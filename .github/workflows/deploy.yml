@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "cicd-github-actions/**"
 
 jobs:
   deploy:
