@@ -1,18 +1,21 @@
 variable "aws_region" {
-  description = "AWS region to deploy resources"
+  description = "AWS region"
   type        = string
-  default     = "us-east-1"
-}
-variable "subnet_id" {
-  description = "Subnet to launch EC2 into"
-  type        = string
-}
-variable "vpc_id" {
-  description = "VPC where EC2 will be deployed"
-  type        = string
-}
-variable "docker_image" {
-  type = string
-  default = "juvobest/simple-site:v1"
+  default     = "eu-west-2"   # using London
 }
 
+variable "subnet_id" {
+  description = "Existing public subnet ID"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "Existing VPC ID"
+  type        = string
+}
+
+variable "docker_image" {
+  description = "Docker image to deploy"
+  type        = string
+  default     = "juvobest/simple-site:v1"
+}
