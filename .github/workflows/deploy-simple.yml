@@ -1,0 +1,34 @@
+name: Deploy Terraform Simple Site
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "simple-site/**"
+      - ".github/workflows/deploy-simple.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.TERRAFORM_EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.TERRAFORM_EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Simple Site
+        run: |
+          ssh ${{ secrets.TERRAFORM_EC2_USER }}@${{ secrets.TERRAFORM_EC2_HOST }} "
+            docker pull juvobest/simple-site:latest &&
+            docker stop simple-site || true &&
+            docker rm simple-site || true &&
+            docker run -d -p 80:80 --name simple-site juvobest/simple-site:latest
+          "
