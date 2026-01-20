@@ -1,11 +1,11 @@
-name: Build & Push Docker Image
+name: Build & Push Simple Site Image
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
       - "simple-site/**"
-      - "terraform-infra/**"
 
 jobs:
   build:
